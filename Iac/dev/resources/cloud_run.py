@@ -11,12 +11,12 @@ def create_cloud_run_services():
     services = [
         {
             "name": "air-image-resize",
-            "image": f"us-west1-docker.pkg.dev/{project_id}/cloud-run-source-deploy/air-image-resize-prod:011b294",
+            "image": f"",
             "memory": "512Mi",
             "cpu": "1",
             "port": 50184,
             "max_instances": 10,
-            "service_account": f"air-image-resize-prod@{project_id}.iam.gserviceaccount.com",
+            "service_account": f"yourserviceaccountname@{project_id}.iam.gserviceaccount.com",
         }
     ]
 
