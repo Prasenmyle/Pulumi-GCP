@@ -1,0 +1,3 @@
+config:
+  gcp:project: "project-prod-gcp"
+  gcp:region: "us-west1"
