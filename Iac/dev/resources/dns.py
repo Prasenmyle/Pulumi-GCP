@@ -6,13 +6,13 @@ def create_dns_resources():
     env_name = get_stack()
 
     # Fetch the existing static IP directly from GCP
-    static_ip = gcp.compute.GlobalAddress.get("static-ip", f"airxp-{env_name}-ingress").address
+    static_ip = gcp.compute.GlobalAddress.get("static-ip", f"test-{env_name}-ingress").address
 
     # Define a managed DNS zone
     default = gcp.dns.ManagedZone(
         "default",
-        name=f"airxp-app-{env_name}",
-        dns_name=f"{env_name}.airxp.app.",
+        name=f"test-app-{env_name}",
+        dns_name=f"{env_name}.test.app.",
         description=f"Managed DNS zone for {env_name}",
         # description="Development Environment",
         cloud_logging_config={
@@ -23,174 +23,22 @@ def create_dns_resources():
     # List of DNS records to create
     dns_records = [
         {
-            "dns_name": f"admin-grpc.{env_name}.airxp.app.",
+            "dns_name": f"admin.{env_name}.test.app.",
             "record_type": "A",
             "ttl": 300,
             "rrdatas": [static_ip],
 
         },
         {
-            "dns_name": f"admin.{env_name}.airxp.app.",
+            "dns_name": f"agent.{env_name}.test.app.",
             "record_type": "A",
             "ttl": 300,
             "rrdatas": [static_ip],
 
         },
+    
         {
-            "dns_name": f"api.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"agent.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"analytics.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-         {
-            "dns_name": f"argocd.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"chat.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"connection.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-        },
-        {
-            "dns_name": f"content-agent.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"entity-graph.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"feed.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"flux.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"litmus.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"itinerary.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"mcp-gateway.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"media-upload.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"moderation.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"notification.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"open-graph.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"search.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"parasoul.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"transcode.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"ugc.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-        {
-            "dns_name": f"user.{env_name}.airxp.app.",
-            "record_type": "A",
-            "ttl": 300,
-            "rrdatas": [static_ip],
-
-        },
-         {
-            "dns_name": f"lora-builder.{env_name}.airxp.app.",
+            "dns_name": f"chat.{env_name}.test.app.",
             "record_type": "A",
             "ttl": 300,
             "rrdatas": [static_ip],

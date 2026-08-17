@@ -8,9 +8,9 @@ def create_gke_cluster_and_node_pool():
     project_id = gcp.config.project
 
     # Generate a valid cluster name
-    cluster_name = f"airxp-{env_name}-gke".lower().replace("_", "-")
+    cluster_name = f"test-{env_name}-gke".lower().replace("_", "-")
 
-    airxp_dev_gke = gcp.container.Cluster("airxp_dev_gke",
+    test_dev_gke = gcp.container.Cluster("test_dev_gke",
     default_max_pods_per_node=110,
     default_snat_status={
         "disabled": False,

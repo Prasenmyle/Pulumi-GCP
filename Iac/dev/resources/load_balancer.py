@@ -4,7 +4,7 @@ from pulumi import get_stack
 
 def create_global_network_load_balancer():
     env_name = get_stack()
-    name = f"airxp-{env_name}".lower().replace("_", "-")
+    name = f"test-{env_name}".lower().replace("_", "-")
 
     default = gcp.compute.HealthCheck(
         "default",
@@ -18,8 +18,8 @@ def create_global_network_load_balancer():
     )
 
     # Create a backend service for https
-    airxp_dev_backend_service_https = gcp.compute.BackendService(
-        "airxp_dev_backend_service_https",
+    test_dev_backend_service_https = gcp.compute.BackendService(
+        "test_dev_backend_service_https",
         name=f"{name}-ingress-https",
         protocol="TCP",
         health_checks=default.id,
@@ -36,28 +36,28 @@ def create_global_network_load_balancer():
     )
 
     # Create a Target TCP Proxy for https
-    airxp_dev_ingress_https_target_proxy = gcp.compute.TargetTCPProxy(
-        "airxp_dev_ingress_https_target_proxy",
+    test_dev_ingress_https_target_proxy = gcp.compute.TargetTCPProxy(
+        "test_dev_ingress_https_target_proxy",
         name=f"{name}-ingress-https-target-proxy",
-        backend_service=airxp_dev_backend_service_https.self_link,
+        backend_service=test_dev_backend_service_https.self_link,
         proxy_header="PROXY_V1",
     )
 
     # Create a forwarding rule for https
-    airxp_dev_forwarding_rule_https = gcp.compute.GlobalForwardingRule(
-        "airxp_dev_forwarding_rule_https",
+    test_dev_forwarding_rule_https = gcp.compute.GlobalForwardingRule(
+        "test_dev_forwarding_rule_https",
         name=f"{name}-ingress-https",
         network_tier="PREMIUM",
         # ip_address=static_ip.address,
         ip_protocol="TCP",
         port_range="443-443",
         load_balancing_scheme="EXTERNAL_MANAGED",
-        target=airxp_dev_ingress_https_target_proxy.self_link,
+        target=test_dev_ingress_https_target_proxy.self_link,
     )
 
     # Create a backend service for http
-    airxp_dev_backend_service = gcp.compute.BackendService(
-        "airxp_dev_backend_service",
+    test_dev_backend_service = gcp.compute.BackendService(
+        "test_dev_backend_service",
         name=f"{name}-ingress",
         protocol="TCP",
         health_checks=default.id,
@@ -76,13 +76,13 @@ def create_global_network_load_balancer():
     default = gcp.compute.TargetTCPProxy(
         "default",
         name=f"{name}-ingress-target-proxy",
-        backend_service=airxp_dev_backend_service.self_link,
+        backend_service=test_dev_backend_service.self_link,
         proxy_header="PROXY_V1",
     )
 
     # Create a forwarding rule for http
-    airxp_dev_forwarding_rule = gcp.compute.GlobalForwardingRule(
-        "airxp_dev_forwarding_rule",
+    test_dev_forwarding_rule = gcp.compute.GlobalForwardingRule(
+        "test_dev_forwarding_rule",
         name=f"{name}-ingress-forwarding-rule",
         # ip_address=static_ip.address,
         ip_protocol="TCP",
